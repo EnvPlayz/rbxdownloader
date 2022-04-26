@@ -45,6 +45,7 @@ body{
     <div id="main">
     	<div class="fof">
         		<h1>${msg}</h1>
+                <p>v0.3</p>
     	</div>
     </div>`
 }
@@ -111,7 +112,7 @@ app.get("/download/:audioID",(req,res) => {
                       a.setAttribute('download', "${filename}"+'.mp3');
                     //   a.click();
                       click(a)
-                    //   window.location="/success"
+                      window.location="/success"
                   })
                 })
             </script>
