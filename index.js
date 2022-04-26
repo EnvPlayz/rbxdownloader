@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const axios = require('axios')
 const noblox = require('noblox.js')
+var ver = process.env.VER || 0.4
 function formatMsg(msg){
     return `<style>
     *{
@@ -45,7 +46,7 @@ body{
     <div id="main">
     	<div class="fof">
         		<h1>${msg}</h1>
-                <p>v0.3</p>
+                <p>v${ver}</p>
     	</div>
     </div>`
 }
@@ -120,7 +121,7 @@ app.get("/download/:audioID",(req,res) => {
                   })
                 })
             </script>
-            ${formatMsg("Proccessing your files..")}`)
+            ${formatMsg("Processing your files..")}`)
         })
     }).catch(function(err){
         res.send(formatMsg(err))
