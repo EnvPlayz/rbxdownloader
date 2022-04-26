@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon ."
+    "devStart": "nodemon .",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,7 +13,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "express": "^4.17.3",
-    "noblox.js": "^4.13.1"
+    "noblox.js": "^6.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
