@@ -49,7 +49,9 @@ body{
     	</div>
     </div>`
 }
-
+app.get("/downloader",(req, res)=>{
+    res.sendFile(__dirname +"/download.js")
+})
 app.get("/download/:audioID",(req,res) => {
     axios.get(`https://www.roblox.com/library/${req.params.audioID}/`).then((response) => {
         const data = response.data;
@@ -71,6 +73,7 @@ app.get("/download/:audioID",(req,res) => {
             const asset = await noblox.getProductInfo(req.params.audioID)
             const filename = asset.Name
             res.send(`
+            <script src="/downloader"></script>
             <script>
                 function dataURItoBlob(dataURI) {
                     var byteString = atob(dataURI.split(',')[1]);
@@ -105,18 +108,19 @@ app.get("/download/:audioID",(req,res) => {
                     b.lastModifiedDate = new Date()
                     b.name = ''
                     toBase64(b).then(function(resource){
-                      const a = document.createElement('a');
-                      a.rel = 'noopener'
-                      a.href = resource;
-                      var fileid = location.pathname.substr(location.pathname.lastIndexOf("/")+1);
-                      a.setAttribute('download', "${filename}"+'.mp3');
-                    //   a.click();
-                      click(a)
-                      window.location="/success"
+                    //   const a = document.createElement('a');
+                    //   a.rel = 'noopener'
+                    //   a.href = resource;
+                    //   var fileid = location.pathname.substr(location.pathname.lastIndexOf("/")+1);
+                    //   a.setAttribute('download', "${filename}"+'.mp3');
+                    // //   a.click();
+                    //   click(a)
+                    download(resource,'${filename}',"mp3")
+                    window.location="/success"
                   })
                 })
             </script>
-            ${formatMsg("Proccessing media..")}`)
+            ${formatMsg("Proccessing your files..")}`)
         })
     }).catch(function(err){
         res.send(formatMsg(err))
