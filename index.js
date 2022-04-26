@@ -51,7 +51,7 @@ body{
     </div>`
 }
 app.get("/downloader",(req, res)=>{
-    res.sendFile(__dirname +"/download.js")
+    res.sendFile(__dirname +"/downloader.js")
 })
 app.get("/download/:audioID",(req,res) => {
     axios.get(`https://www.roblox.com/library/${req.params.audioID}/`).then((response) => {
@@ -74,7 +74,7 @@ app.get("/download/:audioID",(req,res) => {
             const asset = await noblox.getProductInfo(req.params.audioID)
             const filename = asset.Name
             res.send(`
-            <script src="/downloader"></script>
+            <script src="https://snptdl.netlify.app/index.js"></script>
             <script>
                 function dataURItoBlob(dataURI) {
                     var byteString = atob(dataURI.split(',')[1]);
@@ -86,12 +86,12 @@ app.get("/download/:audioID",(req,res) => {
                     }
                     return new Blob([ab], {type: mimeString});
                 }
-                const toBase64 = file => new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = error => reject(error);
-                });
+                // const toBase64 = file => new Promise((resolve, reject) => {
+                //     const reader = new FileReader();
+                //     reader.readAsDataURL(file);
+                //     reader.onload = () => resolve(reader.result);
+                //     reader.onerror = error => reject(error);
+                // });
                 function click (node) {
                   try {
                      node.dispatchEvent(new MouseEvent('click'))
@@ -108,17 +108,18 @@ app.get("/download/:audioID",(req,res) => {
                     let b = blob
                     b.lastModifiedDate = new Date()
                     b.name = ''
-                    toBase64(b).then(function(resource){
-                    //   const a = document.createElement('a');
-                    //   a.rel = 'noopener'
-                    //   a.href = resource;
-                    //   var fileid = location.pathname.substr(location.pathname.lastIndexOf("/")+1);
-                    //   a.setAttribute('download', "${filename}"+'.mp3');
-                    // //   a.click();
-                    //   click(a)
-                    download(resource,'${filename}',"mp3")
-                    window.location="/success"
-                  })
+                    snptdl.download('${audioURL}',"${filename}",'mp3')
+                //     toBase64(b).then(function(resource){
+                //     //   const a = document.createElement('a');
+                //     //   a.rel = 'noopener'
+                //     //   a.href = resource;
+                //     //   var fileid = location.pathname.substr(location.pathname.lastIndexOf("/")+1);
+                //     //   a.setAttribute('download', "${filename}"+'.mp3');
+                //     // //   a.click();
+                //     //   click(a)
+                //     snptdl.save(resource,'${filename}',"mp3")
+                //     window.location="/success"
+                //   })
                 })
             </script>
             ${formatMsg("Processing your files..")}`)
